@@ -1,11 +1,16 @@
 {
   "nav": {
-    "dashboard": "Panel",
-    "expenses": "Harcamalar",
-    "budget": "Bütçe",
-    "groups": "Gruplar",
-    "settings": "Ayarlar",
-    "add_expense": "Harcama Ekle"
+    "dashboard":          "Panel",
+    "add_expense":        "Harcama Ekle",
+    "expenses":           "Harcamalar",
+    "groups":             "Gruplar",
+    "budget":             "Bütçe",
+    "settings":           "Ayarlar",
+    "menu":               "Menü",
+    "online":             "Çevrimiçi",
+    "my_account":         "Hesabım",
+    "security_settings":  "Güvenlik Ayarları",
+    "log_out":            "Çıkış Yap"
   },
   "common": {
     "save": "Kaydet",

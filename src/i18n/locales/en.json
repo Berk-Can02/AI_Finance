@@ -1,11 +1,16 @@
 {
   "nav": {
-    "dashboard": "Dashboard",
-    "expenses": "Expenses",
-    "budget": "Budget",
-    "groups": "Groups",
-    "settings": "Settings",
-    "add_expense": "Add Expense"
+    "dashboard":          "Dashboard",
+    "add_expense":        "Add Expense",
+    "expenses":           "Expenses",
+    "groups":             "Groups",
+    "budget":             "Budget",
+    "settings":           "Settings",
+    "menu":               "Menu",
+    "online":             "Online",
+    "my_account":         "My Account",
+    "security_settings":  "Security Settings",
+    "log_out":            "Log Out"
   },
   "common": {
     "save": "Save",

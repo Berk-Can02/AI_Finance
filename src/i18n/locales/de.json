@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "dashboard":   "Dashboard",
+    "add_expense": "Ausgabe hinzufügen",
+    "expenses":    "Ausgaben",
+    "groups":      "Gruppen",
+    "budget":      "Budget",
+    "settings":    "Einstellungen",
+    "menu":        "Menü",
+    "online":      "Online",
+    "my_account":  "Mein Konto",
+    "security_settings": "Sicherheitseinstellungen",
+    "log_out":     "Abmelden"
+  },
+  "common": {
+    "save":    "Speichern",
+    "cancel":  "Abbrechen",
+    "delete":  "Löschen",
+    "edit":    "Bearbeiten",
+    "loading": "Wird geladen…",
+    "saving":  "Wird gespeichert…",
+    "saved":   "Gespeichert!",
+    "sign_out": "Abmelden",
+    "confirm": "Bestätigen",
+    "back":    "Zurück",
+    "error":   "Fehler",
+    "success": "Erfolg"
+  },
+  "dashboard": {
+    "title":             "Dashboard",
+    "welcome":           "Willkommen zurück",
+    "overview":          "Hier ist Ihre Finanzübersicht.",
+    "total_balance":     "Gesamtguthaben",
+    "monthly_income":    "Monatliches Einkommen",
+    "monthly_expenses":  "Monatliche Ausgaben",
+    "savings_rate":      "Sparquote",
+    "loading":           "Dashboard-Daten werden geladen..."
+  },
+  "expenses": {
+    "title":       "Ausgaben",
+    "add":         "Ausgabe hinzufügen",
+    "description": "Verfolgen und verwalten Sie Ihre Ausgaben.",
+    "no_expenses": "Keine Ausgaben gefunden.",
+    "amount":      "Betrag",
+    "category":    "Kategorie",
+    "date":        "Datum",
+    "notes":       "Notizen",
+    "search":      "Ausgaben suchen…"
+  },
+  "budget": {
+    "title":       "Budget",
+    "description": "Monatliche Budgetgrenzen verwalten.",
+    "allocated":   "Zugewiesen",
+    "spent":       "Ausgegeben",
+    "remaining":   "Verbleibend",
+    "optimize":    "Mit KI optimieren"
+  },
+  "groups": {
+    "title":       "Gruppen",
+    "description": "Gemeinsame Ausgaben verwalten.",
+    "create":      "Gruppe erstellen",
+    "members":     "Mitglieder",
+    "add_member":  "Mitglied hinzufügen"
+  },
+  "settings": {
+    "title":       "Einstellungen",
+    "description": "Konto und Einstellungen verwalten.",
+    "tabs": {
+      "profile":       "Profil",
+      "appearance":    "Erscheinungsbild",
+      "notifications": "Benachrichtigungen",
+      "security":      "Sicherheit"
+    },
+    "profile": {
+      "title":          "Profilinformationen",
+      "description":    "Name, Benutzername und Kontaktdaten aktualisieren.",
+      "full_name":      "Vollständiger Name",
+      "username":       "Benutzername",
+      "phone":          "Telefon (optional)",
+      "email":          "E-Mail",
+      "email_locked":   "E-Mail kann nach der Registrierung nicht geändert werden.",
+      "save":           "Profil speichern",
+      "financial":      "Finanzielle & regionale Einstellungen",
+      "financial_desc": "Monatliches Einkommen, Währung und Sprache festlegen.",
+      "monthly_income": "Monatliches Einkommen",
+      "savings_target": "Sparziel 20%",
+      "daily_budget":   "Tagesbudget",
+      "currency":       "Währung",
+      "language":       "Sprache",
+      "upload_photo":   "Foto hochladen",
+      "change_photo":   "Foto ändern"
+    },
+    "appearance": {
+      "title":       "Anzeigeeinstellungen",
+      "description": "Wählen Sie Ihr Theme.",
+      "light":       "Hell",
+      "dark":        "Dunkel",
+      "system":      "System",
+      "light_desc":  "Sauber & hell",
+      "dark_desc":   "Augenschonend",
+      "system_desc": "Folgt Ihrem Betriebssystem",
+      "save":        "Theme speichern"
+    },
+    "notifications": {
+      "title":              "Benachrichtigungseinstellungen",
+      "description":        "Wählen Sie, worüber Sie informiert werden möchten.",
+      "email":              "E-Mail-Benachrichtigungen",
+      "email_desc":         "Updates und Warnungen per E-Mail erhalten",
+      "budget_alerts":      "Budgetwarnungen",
+      "budget_alerts_desc": "Benachrichtigung, wenn die Ausgaben das Limit überschreiten",
+      "weekly_report":      "Wöchentliche Berichte",
+      "weekly_report_desc": "Wöchentliche Zusammenfassung jeden Montag",
+      "ai_insights":        "KI-Einblicke",
+      "ai_insights_desc":   "KI-gestützte Finanzempfehlungen erhalten",
+      "save":               "Einstellungen speichern"
+    },
+    "security": {
+      "title":            "Passwort ändern",
+      "description":      "Aktuelles Passwort bestätigen, bevor ein neues festgelegt wird.",
+      "current_password": "Aktuelles Passwort",
+      "new_password":     "Neues Passwort",
+      "confirm_password": "Neues Passwort bestätigen",
+      "change":           "Passwort ändern",
+      "changing":         "Wird aktualisiert…",
+      "changed":          "Geändert!",
+      "danger_zone":      "Gefahrenzone",
+      "danger_desc":      "Unwiderrufliche Aktionen. Bitte sorgfältig lesen.",
+      "sign_out_desc":    "Aktuelle Sitzung beenden. Daten bleiben erhalten.",
+      "clear_expenses":   "Alle persönlichen Ausgaben löschen",
+      "clear_desc":       "Alle aufgezeichneten persönlichen Ausgaben werden gelöscht.",
+      "clear_confirm":    "Ja, alle Ausgaben löschen"
+    }
+  }
+}

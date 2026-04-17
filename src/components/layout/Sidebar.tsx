@@ -11,8 +11,9 @@ import {
   User,
   ShieldCheck,
   ChevronDown,
-  X
+  X,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -27,26 +28,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-const navItems = [
-  { path: "/", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/add-expense", label: "Add Expense", icon: Plus },
-  { path: "/expenses", label: "Expenses", icon: List },
-  { path: "/groups", label: "Groups", icon: Users },
-  { path: "/budget", label: "Budget", icon: PiggyBank },
-  { path: "/settings", label: "Settings", icon: Settings },
-];
-
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const location = useLocation();
+  const location         = useLocation();
   const { user, logout } = useAuth();
-  const isMobile = useIsMobile();
+  const isMobile         = useIsMobile();
+  const { t }            = useTranslation();
 
-  const displayName = user?.name || user?.username || user?.email || "Guest User";
+  // Defined inside the component so t() re-runs on every language change render
+  const navItems = [
+    { path: "/",            label: t("nav.dashboard"),   icon: LayoutDashboard },
+    { path: "/add-expense", label: t("nav.add_expense"), icon: Plus            },
+    { path: "/expenses",    label: t("nav.expenses"),    icon: List            },
+    { path: "/groups",      label: t("nav.groups"),      icon: Users           },
+    { path: "/budget",      label: t("nav.budget"),      icon: PiggyBank       },
+    { path: "/settings",    label: t("nav.settings"),    icon: Settings        },
+  ];
+
+  const displayName  = user?.name || user?.username || user?.email || "Guest User";
   const userInitials = displayName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
@@ -72,7 +75,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
         </div>
 
-        {/* Close Button for Mobile (Top Trailing) */}
         {isMobile && (
           <Button
             variant="ghost"
@@ -85,15 +87,16 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         )}
       </div>
 
-      {/* Navigation section */}
+      {/* Navigation */}
       <div className="flex-1 px-4 space-y-8 overflow-y-auto no-scrollbar py-4">
         <div>
-          <p className="px-3 mb-4 text-[11px] font-bold text-sidebar-foreground/40 uppercase tracking-[0.2em]">Menu</p>
+          <p className="px-3 mb-4 text-[11px] font-bold text-sidebar-foreground/40 uppercase tracking-[0.2em]">
+            {t("nav.menu")}
+          </p>
           <nav className="space-y-1.5">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
-              const Icon = item.icon;
-
+              const Icon     = item.icon;
               return (
                 <NavLink
                   key={item.path}
@@ -109,21 +112,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                   {isActive && (
                     <div className="absolute left-0 w-1 h-5 bg-primary rounded-r-full" />
                   )}
-                  
                   <div className={cn(
                     "flex items-center justify-center rounded-lg transition-all duration-300",
                     isActive ? "text-primary" : "group-hover:text-sidebar-foreground"
                   )}>
                     <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
                   </div>
-                  
                   <span className={cn(
                     "font-semibold text-sm transition-all duration-300",
                     isActive ? "translate-x-0.5" : "group-hover:translate-x-1"
                   )}>
                     {item.label}
                   </span>
-
                   {isActive && (
                     <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.6)]" />
                   )}
@@ -149,17 +149,17 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side="top" align="end" className="w-56 p-2 rounded-xl shadow-2xl border-sidebar-border bg-sidebar text-sidebar-foreground">
                   <DropdownMenuLabel className="font-bold flex items-center gap-2">
-                    <User size={16} /> My Account
+                    <User size={16} /> {t("nav.my_account")}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-sidebar-border" />
                   <DropdownMenuItem className="rounded-lg cursor-pointer py-2 font-medium focus:bg-sidebar-accent">
                     <ShieldCheck className="mr-2 h-4 w-4 text-primary" />
-                    <span>Security Settings</span>
+                    <span>{t("nav.security_settings")}</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-sidebar-border" />
                   <DropdownMenuItem onClick={logout} className="rounded-lg cursor-pointer py-2 font-medium text-red-400 focus:text-red-400 focus:bg-red-400/10">
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log Out</span>
+                    <span>{t("nav.log_out")}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -170,10 +170,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </p>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <p className="text-[10px] font-bold text-sidebar-foreground/40 uppercase tracking-widest">Online</p>
+                  <p className="text-[10px] font-bold text-sidebar-foreground/40 uppercase tracking-widest">
+                    {t("nav.online")}
+                  </p>
                 </div>
               </div>
-              
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-sidebar-foreground/40 hover:text-sidebar-foreground">
@@ -182,7 +184,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side="top" align="end" className="w-40 p-1 rounded-lg bg-sidebar border-sidebar-border">
                   <DropdownMenuItem onClick={logout} className="text-red-400 font-bold text-xs uppercase tracking-wider rounded-md focus:bg-red-400/10">
-                    Logout
+                    {t("nav.log_out")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
