@@ -9,6 +9,7 @@ interface User {
   username?: string;
   phone?: string;
   income?: number;
+  avatar_url?: string;
 }
 
 interface AuthContextType {
@@ -33,13 +34,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    const storedUser  = localStorage.getItem('user');
 
     if (storedToken && storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
         setToken(storedToken);
+        // ── KEY FIX: reload preferences from DB on every page refresh ──────
+        // Without this, language/currency/theme revert to localStorage defaults
+        // instead of the database values after the user clears cache or switches
+        // browsers. We do not await so the UI is not blocked.
+        loadPrefs(storedToken).catch(console.error);
       } catch (e) {
         console.error("Failed to parse stored user or token", e);
         localStorage.removeItem('token');

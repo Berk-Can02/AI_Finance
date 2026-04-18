@@ -79,30 +79,35 @@ async function apiFetch(url: string, token: string, options: RequestInit = {}) {
 
 export default function Settings() {
   const { user, token, updateUser, logout } = useAuth();
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const { prefs, setPrefs, savePrefs, isLoading: prefsLoading } = usePreferences();
+  const { setTheme } = useTheme();
+  const { prefs, setPrefs, savePrefs, isLoading: prefsLoading, registerThemeSetter } = usePreferences();
   const { toast } = useToast();
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [prefsSaving, setPrefsSaving] = useState(false);
+
+  // Register next-themes driver once — PreferencesContext will call setTheme
+  // whenever prefs.theme changes (from DB, localStorage, or user selection)
+  useEffect(() => {
+    registerThemeSetter(setTheme);
+  }, [registerThemeSetter, setTheme]);
 
   const handleSavePrefs = async () => {
     if (!token) return;
     setPrefsSaving(true);
     try {
       await savePrefs(token);
-      toast({ title: "Preferences saved", description: "Your settings have been updated." });
+      toast({ title: t('common.success'), description: "Your settings have been saved to the database." });
     } catch (e: any) {
-      toast({ title: "Error", description: e.message, variant: "destructive" });
+      toast({ title: t('common.error'), description: e.message, variant: "destructive" });
     } finally {
       setPrefsSaving(false);
     }
   };
 
-  // Unified helper: updates global PreferencesContext + applies theme via next-themes
+  // updatePref: update context state (triggers theme/language side-effects automatically)
   const updatePref = <K extends keyof typeof prefs>(key: K, value: (typeof prefs)[K]) => {
-    setPrefs({ [key]: value });
-    if (key === "theme") setTheme(value as string);
+    setPrefs({ [key]: value } as Partial<typeof prefs>);
   };
 
   const userInitial = (user?.name || user?.username || user?.email || "U")[0].toUpperCase();
@@ -135,7 +140,7 @@ export default function Settings() {
         {/* ── APPEARANCE TAB ── */}
         <TabsContent value="appearance" className="space-y-5">
           <AppearanceTab
-            theme={theme} prefs={prefs} updatePref={updatePref}
+            prefs={prefs} updatePref={updatePref}
             onSave={handleSavePrefs} isSaving={prefsSaving} isLoading={prefsLoading}
           />
         </TabsContent>
@@ -522,23 +527,24 @@ function ProfileTab({ user, token, updateUser, toast, userInitial, prefs, update
 
 // ─── Appearance Tab ──────────────────────────────────────────────────────────
 
-function AppearanceTab({ theme, prefs, updatePref, onSave, isSaving, isLoading }: any) {
+function AppearanceTab({ prefs, updatePref, onSave, isSaving, isLoading }: any) {
+  const { t } = useTranslation();
   const THEMES = [
-    { value: "light", label: "Light", icon: Sun, desc: "Clean & bright" },
-    { value: "dark", label: "Dark", icon: Moon, desc: "Easy on the eyes" },
-    { value: "system", label: "System", icon: Monitor, desc: "Follows your OS" },
+    { value: "light",  label: t('settings.appearance.light'),  icon: Sun,     desc: t('settings.appearance.light_desc')  },
+    { value: "dark",   label: t('settings.appearance.dark'),   icon: Moon,    desc: t('settings.appearance.dark_desc')   },
+    { value: "system", label: t('settings.appearance.system'), icon: Monitor, desc: t('settings.appearance.system_desc') },
   ];
 
   return (
     <Card>
       <CardHeader className="pb-4">
-        <CardTitle className="text-base">Display Preferences</CardTitle>
-        <CardDescription>Choose your theme. Changes apply instantly and persist across sessions.</CardDescription>
+        <CardTitle className="text-base">{t('settings.appearance.title')}</CardTitle>
+        <CardDescription>{t('settings.appearance.description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {isLoading ? (
           <div className="flex items-center gap-2 text-muted-foreground py-4">
-            <Loader2 className="w-4 h-4 animate-spin" /> Loading preferences…
+            <Loader2 className="w-4 h-4 animate-spin" /> {t('common.loading')}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -576,8 +582,9 @@ function AppearanceTab({ theme, prefs, updatePref, onSave, isSaving, isLoading }
         <div className="flex justify-end">
           <Button onClick={onSave} disabled={isSaving || isLoading}
             className="h-10 px-5 rounded-xl font-bold gradient-primary hover:opacity-90">
-            {isSaving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving…</>
-              : <><Save className="mr-2 h-4 w-4" />Save Theme</>}
+            {isSaving
+              ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t('common.saving')}</>
+              : <><Save className="mr-2 h-4 w-4" />{t('settings.appearance.save')}</>}
           </Button>
         </div>
       </CardContent>
@@ -587,24 +594,26 @@ function AppearanceTab({ theme, prefs, updatePref, onSave, isSaving, isLoading }
 
 // ─── Notifications Tab ───────────────────────────────────────────────────────
 
-const NOTIF_ITEMS: { key: string; title: string; desc: string }[] = [
-  { key: "notif_email",         title: "Email Notifications", desc: "Receive updates and alerts via email" },
-  { key: "notif_budget_alerts", title: "Budget Alerts",        desc: "Notify when spending approaches your limit" },
-  { key: "notif_weekly_report", title: "Weekly Reports",       desc: "Get a weekly spending digest every Monday" },
-  { key: "notif_ai_insights",   title: "AI Insights",          desc: "Receive AI-powered financial recommendations" },
-];
-
 function NotificationsTab({ prefs, updatePref, onSave, isSaving, isLoading }: any) {
+  const { t } = useTranslation();
+
+  const NOTIF_ITEMS = [
+    { key: "notif_email",         title: t('settings.notifications.email'),         desc: t('settings.notifications.email_desc')         },
+    { key: "notif_budget_alerts", title: t('settings.notifications.budget_alerts'),  desc: t('settings.notifications.budget_alerts_desc')  },
+    { key: "notif_weekly_report", title: t('settings.notifications.weekly_report'),  desc: t('settings.notifications.weekly_report_desc')  },
+    { key: "notif_ai_insights",   title: t('settings.notifications.ai_insights'),    desc: t('settings.notifications.ai_insights_desc')    },
+  ];
+
   return (
     <Card>
       <CardHeader className="pb-4">
-        <CardTitle className="text-base">Notification Preferences</CardTitle>
-        <CardDescription>Choose what you want to be alerted about. Saved to your account.</CardDescription>
+        <CardTitle className="text-base">{t('settings.notifications.title')}</CardTitle>
+        <CardDescription>{t('settings.notifications.description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
         {isLoading ? (
           <div className="flex items-center gap-2 text-muted-foreground py-4">
-            <Loader2 className="w-4 h-4 animate-spin" /> Loading preferences…
+            <Loader2 className="w-4 h-4 animate-spin" /> {t('common.loading')}
           </div>
         ) : (
           <>
@@ -629,8 +638,9 @@ function NotificationsTab({ prefs, updatePref, onSave, isSaving, isLoading }: an
         <div className="flex justify-end pt-2">
           <Button onClick={onSave} disabled={isSaving || isLoading}
             className="h-10 px-5 rounded-xl font-bold gradient-primary hover:opacity-90">
-            {isSaving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving…</>
-              : <><Save className="mr-2 h-4 w-4" />Save Preferences</>}
+            {isSaving
+              ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t('common.saving')}</>
+              : <><Save className="mr-2 h-4 w-4" />{t('settings.notifications.save')}</>}
           </Button>
         </div>
       </CardContent>

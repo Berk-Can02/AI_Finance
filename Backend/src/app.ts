@@ -108,6 +108,48 @@ pool.connect()
 
       // 3. This adds a "groupId" tag to your expenses so we know if an expense belongs to a group
       await client.query('ALTER TABLE "Expense" ADD COLUMN IF NOT EXISTS "groupId" UUID REFERENCES "Group"(id) ON DELETE SET NULL');
+
+      // ── UserPreferences: ensure the table and ALL columns exist ────────────
+      // This block is idempotent — ADD COLUMN IF NOT EXISTS never errors.
+      // Root cause of "Save" errors: these columns were defined in the backend
+      // SELECT/INSERT but never confirmed to exist in the live database.
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS "UserPreferences" (
+          "userId"             INTEGER PRIMARY KEY REFERENCES "User"(id) ON DELETE CASCADE,
+          theme                TEXT    NOT NULL DEFAULT 'system',
+          currency             TEXT    NOT NULL DEFAULT 'TRY',
+          language             TEXT    NOT NULL DEFAULT 'en',
+          notif_email          BOOLEAN NOT NULL DEFAULT TRUE,
+          notif_budget_alerts  BOOLEAN NOT NULL DEFAULT TRUE,
+          notif_weekly_report  BOOLEAN NOT NULL DEFAULT TRUE,
+          notif_ai_insights    BOOLEAN NOT NULL DEFAULT TRUE,
+          created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      // Ensure every column exists even if the table was previously created without them
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS theme               TEXT    NOT NULL DEFAULT 'system'`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS currency            TEXT    NOT NULL DEFAULT 'TRY'`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS language            TEXT    NOT NULL DEFAULT 'en'`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS notif_email         BOOLEAN NOT NULL DEFAULT TRUE`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS notif_budget_alerts BOOLEAN NOT NULL DEFAULT TRUE`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS notif_weekly_report BOOLEAN NOT NULL DEFAULT TRUE`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS notif_ai_insights   BOOLEAN NOT NULL DEFAULT TRUE`);
+      await client.query(`ALTER TABLE "UserPreferences" ADD COLUMN IF NOT EXISTS updated_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP`);
+
+      // ── User table: extra columns added in later schema updates ────────────
+      await client.query(`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS phone       TEXT`);
+      await client.query(`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS avatar_url  TEXT`);
+      await client.query(`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP`);
+
+      // Backfill UserPreferences rows for any users who don't have one yet
+      await client.query(`
+        INSERT INTO "UserPreferences" ("userId")
+        SELECT id FROM "User"
+        WHERE id NOT IN (SELECT "userId" FROM "UserPreferences")
+      `);
+
+      console.log('[Migration] UserPreferences schema verified ✓');
     } catch (e: any) {
       console.log('Database migration log:', e.message);
     }
