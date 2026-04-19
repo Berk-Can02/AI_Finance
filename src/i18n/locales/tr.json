@@ -5,6 +5,7 @@
     "expenses": "Harcamalar",
     "groups": "Gruplar",
     "budget": "Bütçe",
+    "loans": "Borç & Alacak",
     "settings": "Ayarlar",
     "collapse": "Daralt",
     "appName": "FinanceAI",
@@ -548,5 +549,47 @@
     "graceExpired": "Süre doldu. Verilerinizi kurtarmak için destek ile iletişine geçin.",
     "deletingIn": "Kalıcı silme:",
     "restoreNow": "Hesabınızı korumak için şimdi geri yükleyin."
+  },
+  "loansPage": {
+    "title": "Borç & Alacak",
+    "subtitle": "Verdiğiniz veya aldığınız borçları takip edin",
+    "addLoan": "Kayıt Ekle",
+    "editLoan": "Kaydı Düzenle",
+    "formDescription": "Birine verdiğiniz veya birinden aldığınız parayı kaydedin.",
+    "type": "Tür",
+    "lent": "Verilen",
+    "borrowed": "Alınan",
+    "amount": "Tutar",
+    "person": "Kişi",
+    "personPlaceholder": "İsim veya kişi",
+    "date": "Tarih",
+    "pickDate": "Tarih seçin",
+    "descriptionOptional": "Açıklama (isteğe bağlı)",
+    "descriptionPlaceholder": "Bu borç ne içindi?",
+    "totalLent": "Toplam Verilen (açık)",
+    "totalBorrowed": "Toplam Alınan (açık)",
+    "netBalance": "Net Bakiye",
+    "tabAll": "Tümü",
+    "tabLent": "Verilen",
+    "tabBorrowed": "Alınan",
+    "tabSettled": "Ödendi",
+    "searchPlaceholder": "Kişi veya nota göre ara...",
+    "empty": "Henüz kayıt yok",
+    "emptyDesc": "Verdiğiniz veya aldığınız bir borç ekleyerek başlayın.",
+    "settled": "Ödendi",
+    "markSettled": "Ödendi olarak işaretle",
+    "markOpen": "Yeniden aç",
+    "deleteTitle": "Kayıt silinsin mi?",
+    "deleteDesc": "Bu işlem geri alınamaz. Kayıt kalıcı olarak silinecek.",
+    "errors": {
+      "amountInvalid": "Geçerli bir pozitif tutar girin",
+      "personRequired": "Kişi adı gereklidir",
+      "dateRequired": "Lütfen bir tarih seçin"
+    },
+    "toasts": {
+      "added": "Kayıt başarıyla eklendi",
+      "updated": "Kayıt güncellendi",
+      "deleted": "Kayıt silindi"
+    }
   }
 }

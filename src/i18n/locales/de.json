@@ -5,6 +5,7 @@
     "expenses": "Ausgaben",
     "groups": "Gruppen",
     "budget": "Budget",
+    "loans": "Kredite",
     "settings": "Einstellungen",
     "collapse": "Einklappen",
     "appName": "FinanceAI",
@@ -13,7 +14,9 @@
     "my_account": "Mein Konto",
     "security_settings": "Sicherheitseinstellungen",
     "log_out": "Abmelden",
-    "online": "Online"
+    "online": "Online",
+    "loans": "Loans",
+    "loans": "Kredite"
   },
   "common": {
     "save": "Speichern",
@@ -545,5 +548,47 @@
     "graceExpired": "Die Frist ist abgelaufen. Kontaktieren Sie den Support, um Ihre Daten zu retten.",
     "deletingIn": "Endgültig gelöscht in",
     "restoreNow": "Stellen Sie jetzt wieder her, um Ihr Konto zu behalten."
+  },
+  "loansPage": {
+    "title": "Kredite",
+    "subtitle": "Verfolgen Sie geliehenes oder verliehenes Geld",
+    "addLoan": "Eintrag hinzufügen",
+    "editLoan": "Eintrag bearbeiten",
+    "formDescription": "Erfassen Sie an jemanden verliehenes oder von jemandem geliehenes Geld.",
+    "type": "Art",
+    "lent": "Verliehen",
+    "borrowed": "Geliehen",
+    "amount": "Betrag",
+    "person": "Person",
+    "personPlaceholder": "Name oder Kontakt",
+    "date": "Datum",
+    "pickDate": "Datum wählen",
+    "descriptionOptional": "Beschreibung (optional)",
+    "descriptionPlaceholder": "Wofür war dieser Kredit?",
+    "totalLent": "Gesamt verliehen (offen)",
+    "totalBorrowed": "Gesamt geliehen (offen)",
+    "netBalance": "Nettosaldo",
+    "tabAll": "Alle",
+    "tabLent": "Verliehen",
+    "tabBorrowed": "Geliehen",
+    "tabSettled": "Beglichen",
+    "searchPlaceholder": "Nach Person oder Notiz suchen...",
+    "empty": "Keine Einträge",
+    "emptyDesc": "Beginnen Sie mit einem verliehenen oder geliehenen Betrag.",
+    "settled": "Beglichen",
+    "markSettled": "Als beglichen markieren",
+    "markOpen": "Wieder öffnen",
+    "deleteTitle": "Eintrag löschen?",
+    "deleteDesc": "Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag wird dauerhaft entfernt.",
+    "errors": {
+      "amountInvalid": "Gültigen positiven Betrag eingeben",
+      "personRequired": "Name der Person ist erforderlich",
+      "dateRequired": "Bitte Datum auswählen"
+    },
+    "toasts": {
+      "added": "Eintrag erfolgreich hinzugefügt",
+      "updated": "Eintrag aktualisiert",
+      "deleted": "Eintrag gelöscht"
+    }
   }
 }

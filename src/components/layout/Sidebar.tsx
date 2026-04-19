@@ -5,6 +5,7 @@ import {
   List,
   Users,
   PiggyBank,
+  HandCoins,
   Settings,
   Wallet,
   LogOut,
@@ -39,23 +40,24 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose, onToggleCollapse, isCollapsed = false }: SidebarProps) {
-  const location         = useLocation();
+  const location = useLocation();
   const { user, logout } = useAuth();
-  const isMobile         = useIsMobile();
-  const { t }            = useTranslation();
+  const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   const navItems = [
-    { path: "/",            label: t("nav.dashboard"),  icon: LayoutDashboard },
-    { path: "/add-expense", label: t("nav.addExpense"), icon: Plus            },
-    { path: "/expenses",    label: t("nav.expenses"),   icon: List            },
-    { path: "/groups",      label: t("nav.groups"),     icon: Users           },
-    { path: "/budget",      label: t("nav.budget"),     icon: PiggyBank       },
-    { path: "/settings",    label: t("nav.settings"),   icon: Settings        },
+    { path: "/", label: t("nav.dashboard"), icon: LayoutDashboard },
+    { path: "/add-expense", label: t("nav.addExpense"), icon: Plus },
+    { path: "/expenses", label: t("nav.expenses"), icon: List },
+    { path: "/groups", label: t("nav.groups"), icon: Users },
+    { path: "/budget", label: t("nav.budget"), icon: PiggyBank },
+    { path: "/loans", label: t("nav.loans"), icon: Wallet },
+    { path: "/settings", label: t("nav.settings"), icon: Settings },
   ];
 
-  const displayName  = user?.name || user?.username || user?.email || "Guest User";
+  const displayName = user?.name || user?.username || user?.email || "Guest User";
   const userInitials = displayName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
-  const avatarUrl    = user?.avatar_url || undefined;
+  const avatarUrl = user?.avatar_url || undefined;
 
   // Collapsed width: 72px (icon only), expanded: 280px
   const sidebarWidth = !isMobile && isCollapsed ? "w-[72px]" : "w-[280px]";
@@ -125,7 +127,7 @@ export function Sidebar({ isOpen, onClose, onToggleCollapse, isCollapsed = false
         <nav className="space-y-1">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
-            const Icon     = item.icon;
+            const Icon = item.icon;
             return (
               <NavLink
                 key={item.path}

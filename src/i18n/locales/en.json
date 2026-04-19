@@ -5,6 +5,7 @@
     "expenses": "Expenses",
     "groups": "Groups",
     "budget": "Budget",
+    "loans": "Loans",
     "settings": "Settings",
     "collapse": "Collapse",
     "appName": "FinanceAI",
@@ -549,5 +550,47 @@
     "graceExpired": "The grace period has expired. Contact support to recover your data.",
     "deletingIn": "Permanently deleted in",
     "restoreNow": "Restore now to keep your account."
+  },
+  "loansPage": {
+    "title": "Loans",
+    "subtitle": "Track money you've lent or borrowed from people",
+    "addLoan": "Add Loan",
+    "editLoan": "Edit Loan",
+    "formDescription": "Record money lent to or borrowed from someone.",
+    "type": "Type",
+    "lent": "Lent",
+    "borrowed": "Borrowed",
+    "amount": "Amount",
+    "person": "Person",
+    "personPlaceholder": "Name or contact",
+    "date": "Date",
+    "pickDate": "Pick a date",
+    "descriptionOptional": "Description (optional)",
+    "descriptionPlaceholder": "What was this loan for?",
+    "totalLent": "Total Lent (open)",
+    "totalBorrowed": "Total Borrowed (open)",
+    "netBalance": "Net Balance",
+    "tabAll": "All",
+    "tabLent": "Lent",
+    "tabBorrowed": "Borrowed",
+    "tabSettled": "Settled",
+    "searchPlaceholder": "Search by person or note...",
+    "empty": "No loans recorded",
+    "emptyDesc": "Start by adding a loan you've given or received.",
+    "settled": "Settled",
+    "markSettled": "Mark as settled",
+    "markOpen": "Reopen",
+    "deleteTitle": "Delete loan?",
+    "deleteDesc": "This action cannot be undone. The loan record will be permanently removed.",
+    "errors": {
+      "amountInvalid": "Enter a valid positive amount",
+      "personRequired": "Person name is required",
+      "dateRequired": "Please select a date"
+    },
+    "toasts": {
+      "added": "Loan added successfully",
+      "updated": "Loan updated",
+      "deleted": "Loan deleted"
+    }
   }
 }

@@ -17,6 +17,9 @@ import { AuthProvider } from "./context/AuthContext";
 import { PreferencesProvider } from "./context/PreferencesContext";
 import AuthGuard from "./components/AuthGuard";
 import UserProfilePage from "./pages/UserProfile";
+import { LoansProvider } from "./context/LoansContext";
+import Loans from "./pages/Loans";
+
 
 const queryClient = new QueryClient();
 
@@ -28,6 +31,7 @@ const App = () => (
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <PreferencesProvider>
           <AuthProvider>
+            <LoansProvider>
             <AppLayout>
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
@@ -37,11 +41,13 @@ const App = () => (
                 <Route path="/expenses" element={<AuthGuard><Expenses /></AuthGuard>} />
                 <Route path="/groups" element={<AuthGuard><Groups /></AuthGuard>} />
                 <Route path="/budget" element={<AuthGuard><Budget /></AuthGuard>} />
+                <Route path="/loans" element={<AuthGuard><Loans /></AuthGuard>} />
                 <Route path="/settings" element={<AuthGuard><Settings /></AuthGuard>} />
                 <Route path="/settings/profile" element={<AuthGuard><UserProfilePage /></AuthGuard>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AppLayout>
+            </LoansProvider>
           </AuthProvider>
         </PreferencesProvider>
       </BrowserRouter>
